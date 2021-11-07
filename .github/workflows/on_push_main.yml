@@ -1,0 +1,17 @@
+name: Push Main
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+    env:
+      RSYNC_ADDRESS: ${{ secrets.RSYNC_ADDRESS }}
+      RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD}}
+
+    steps:
+      - name: Deploy to hostinger
+        run: npm run deploy:hostinger
