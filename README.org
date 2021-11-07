@@ -1,0 +1,18 @@
+* Random words
+- allows you to choose ~n~ random words from a [[./src/extra/words.ts][list]].
+  
+* Install build and run
+  #+begin_src shell :exports both 
+    # Installing deps
+    npm install
+    
+    # Running in dev mode
+    npm run dev
+    
+    # Building
+    npm run build
+    
+    # Running in prod mode (must build first)
+    npm run start
+    
+  #+end_src
