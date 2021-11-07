@@ -13,5 +13,11 @@ jobs:
       RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD}}
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install node.js (lastest version)
+        uses: actions/setup-node@v2
+
       - name: Deploy to hostinger
         run: npm run deploy:hostinger
