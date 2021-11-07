@@ -32,3 +32,4 @@ jobs:
           remote_host: ${{ secrets.HOST }}
           remote_user: debian
           remote_key: ${{ secrets.DEPLOY_KEY }}
+          remote_key_pass: ${{ secrets.DEPLOY_KEY_PASS }}
