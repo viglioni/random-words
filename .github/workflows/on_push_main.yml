@@ -25,8 +25,9 @@ jobs:
       - name: rsync deployments
         uses: burnett01/rsync-deployments@5.1
         with:
-          switches: -avzr "ssh -p 65002" --delete
+          switches: -avzr --delete
           path: .out
+          remote_port: ${{ secrets.PORT }}
           remote_path: ${{ secrets.PATH }}
           remote_host: ${{ secrets.HOST }}
           remote_user: debian
