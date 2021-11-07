@@ -8,9 +8,6 @@ jobs:
   build:
     name: Deploy
     runs-on: ubuntu-latest
-    env:
-      RSYNC_ADDRESS: ${{ secrets.RSYNC_ADDRESS }}
-      RSYNC_PASSWORD: ${{ secrets.RSYNC_PASSWORD}}
 
     steps:
       - name: Checkout repository
@@ -22,5 +19,15 @@ jobs:
       - name: Install packages
         run: npm ci
 
-      - name: Deploy to hostinger
-        run: npm run hostinger:deploy
+      - name: Build export
+        run: npm run export
+
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@5.1
+        with:
+          switches: -avzr --delete
+          path: .out
+          remote_path: ${{ secrets.PATH }}
+          remote_host: ${{ secrets.HOST }}
+          remote_user: debian
+          remote_key: ${{ secrets.DEPLOY_KEY }}
