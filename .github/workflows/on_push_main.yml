@@ -8,8 +8,6 @@ jobs:
   build:
     name: Deploy
     runs-on: ubuntu-latest
-    env:
-      RSYNC_PASSWORD: ${{ secrets.DEPLOY_KEY_PASS }}
 
     steps:
       - name: Checkout repository
@@ -24,11 +22,12 @@ jobs:
       - name: Build export
         run: npm run export
 
-      - name: Install SSH Key
-        uses: shimataro/ssh-key-action@v2
+      - name: rsync deployments
+        uses: burnett01/rsync-deployments@3.0
         with:
-          key: ${{ secrets.DEPLOY_KEY }}
-          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
-
-      - name: rsync deploy
-        run: rsync -avzhe "ssh -p ${{ secrets.PORT }}" ./out/* ${{ secrets.USER }}@${{ secrets.HOST }}:${{ secrets.PATH }}
+          switches: -avzr --delete
+          path: ./out
+          remote_path: ${{ secrets.PATH }}
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ${{ secrets.USER }}
+          remote_key: ${{ secrets.DEPLOY_KEY }}
